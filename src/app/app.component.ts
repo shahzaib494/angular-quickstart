@@ -31,12 +31,13 @@ export class AppComponent {
     return navigator.hardwareConcurrency || 1;
   }
 
-  getGPUInfo(): string {
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    if (!gl) return 'WebGL not supported';
-    
-    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-    return debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'Unknown GPU';
+ getGPUInfo(): string {
+  const canvas = document.createElement('canvas');
+  const gl = canvas.getContext('webgl') as WebGLRenderingContext | null;
+
+  if (!gl) return 'WebGL not supported';
+
+  const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+  return debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'Unknown GPU';
   }
 }
